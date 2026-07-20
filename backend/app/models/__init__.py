@@ -4,6 +4,7 @@ from app.models.comment import Comment
 from app.models.ticket_history import TicketHistory
 from app.models.department import Department
 from app.models.category import Category
+from app.models.attachment import Attachment
 
 __all__ = [
     "User",
@@ -11,5 +12,6 @@ __all__ = [
     "Comment",
     "TicketHistory",
     "Department",
-    "Category"
+    "Category",
+    "Attachment"
 ]

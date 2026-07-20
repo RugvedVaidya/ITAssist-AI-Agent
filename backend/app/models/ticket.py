@@ -122,4 +122,8 @@ class Ticket(Base):
         back_populates="tickets",
     )
     
-    
+    attachments: Mapped[list["Attachment"]] = relationship(
+        "Attachment",
+        back_populates="ticket",
+        cascade="all, delete-orphan",
+    )

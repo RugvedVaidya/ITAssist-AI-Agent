@@ -40,10 +40,17 @@ class Category(Base):
     )
 
     department: Mapped["Department"] = relationship(
-        "Department"
+        "Department",
+        back_populates="categories",
     )
 
     tickets: Mapped[list["Ticket"]] = relationship(
         "Ticket",
         back_populates="category",
+    )
+    
+    knowledge_articles: Mapped[list["KnowledgeBase"]] = relationship(
+        "KnowledgeBase",
+        back_populates="category",
+        cascade="all, delete-orphan",
     )
