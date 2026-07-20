@@ -1,15 +1,15 @@
 import uuid
 from datetime import datetime
 
-from sqlalchemy import DateTime, String, func
+from sqlalchemy import DateTime, ForeignKey, String, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.database import Base
 
 
-class Department(Base):
-    __tablename__ = "departments"
+class Category(Base):
+    __tablename__ = "categories"
 
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
@@ -28,28 +28,22 @@ class Department(Base):
         nullable=True,
     )
 
+    department_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("departments.id"),
+        nullable=False,
+    )
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
-        nullable=False,
     )
 
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
-        server_default=func.now(),
-        onupdate=func.now(),
-        nullable=False,
+    department: Mapped["Department"] = relationship(
+        "Department"
     )
 
-    # Relationships
-
-    users: Mapped[list["User"]] = relationship(
-        "User",
-        back_populates="department",
-    )
-
-    categories: Mapped[list["Category"]] = relationship(
-        "Category",
-        back_populates="department",
-        cascade="all, delete-orphan",
+    tickets: Mapped[list["Ticket"]] = relationship(
+        "Ticket",
+        back_populates="category",
     )

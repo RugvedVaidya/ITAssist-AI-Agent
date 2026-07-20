@@ -106,13 +106,20 @@ class Ticket(Base):
         cascade="all, delete-orphan",
     )
     
-    department_id: Mapped[uuid.UUID | None] = mapped_column(
+    category_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True),
-        ForeignKey("departments.id"),
+        ForeignKey("categories.id"),
         nullable=True,
+    )
+
+    category: Mapped["Category | None"] = relationship(
+        "Category",
+        back_populates="tickets",
     )
     
     department: Mapped["Department | None"] = relationship(
         "Department",
         back_populates="tickets",
     )
+    
+    

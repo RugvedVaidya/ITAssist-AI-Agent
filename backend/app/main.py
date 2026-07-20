@@ -5,6 +5,7 @@ from app.api.ticket import router as ticket_router
 from app.api.comment import router as comment_router
 from app.api.ticket_history import router as ticket_history_router
 from app.api.department import router as department_router
+from app.api.category import router as category_router
 
 app = FastAPI(
     title="ITAssist AI",
@@ -26,6 +27,7 @@ app.include_router(ticket_router)
 app.include_router(comment_router)
 app.include_router(ticket_history_router)
 app.include_router(department_router)
+app.include_router(category_router)
 
 @app.get("/")
 async def root():
